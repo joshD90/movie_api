@@ -4,6 +4,7 @@ import SearchForm from "../components/SearchForm";
 
 const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
+
   //make the error message disappear after 5seconds
   useEffect(() => {
     if (error === null) return;

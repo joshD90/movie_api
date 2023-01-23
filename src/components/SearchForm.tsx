@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { fetchApi } from "../utils/fetchApi";
+import Spinner from "./Spinner";
 
 //our type for our props
 type Props = {
@@ -10,24 +11,36 @@ type Props = {
 
 const SearchForm: React.FC<Props> = ({ setError }) => {
   const [searchTerm, setSearchTerm] = useState<string | null>();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   //on clicking the search button we fetch data from our api and redirect to a new page passing through the data
   const searchMovie = (e: any): void => {
     e.preventDefault();
+    setLoading(true);
     if (!searchTerm) {
       setError("Try typing a movie before searching");
       return;
     }
     //returns a promise so use .then to grab this data
     fetchApi("SearchMovie", searchTerm)
-      .then((data) => navigate("/results/movie", { state: data }))
+      .then((data) => {
+        setLoading(false);
+        if (data === null) {
+          setError("There was an error with linking to the api");
+        } else {
+          navigate("/results/movie", { state: data });
+        }
+      })
       .catch((err) =>
         setError(
           "There was an error in searching for the movie details" + err.message
         )
       );
   };
+
+  if (loading) return <Spinner message="Searching For Your Movie" />;
 
   return (
     <>

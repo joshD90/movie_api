@@ -22,7 +22,9 @@ export const fetchApi = async (
 ): Promise<any> => {
   try {
     const response = await axios.get(
-      `https://imdb-api.com/en/API/${searchType}/k_9tpl83qh/${searchTerm}`
+      `https://imdb-api.com/en/API/${searchType}/${
+        import.meta.env.VITE_IMDB_API
+      }/${searchTerm}`
     );
 
     const movie: SingleResult = response.data.results[0];
@@ -38,6 +40,6 @@ export const fetchApi = async (
   } catch (error) {
     //even though the catch does not return a promise this is ok for async await
     console.log(error);
-    return error;
+    return null;
   }
 };

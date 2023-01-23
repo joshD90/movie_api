@@ -15,11 +15,15 @@ const Results = () => {
     );
 
   return (
-    <div className="bg-stone-800 w-full min-h-screen text-stone-50 flex flex-col items-center justify-around overflow-auto gap-5">
+    <div className="bg-stone-800 w-full min-h-screen text-stone-50 flex flex-col items-center justify-around overflow-auto gap-5 p-5">
       <h1>Search Result for "{movie.searchedFor}"</h1>
-      <img className="h-96" src={movie.image} />
-      <h2>{movie.title}</h2>
-      <h3 className="w-4/5 text-center">{movie.description}</h3>
+      <div className="flex bg-stone-700 flex-wrap">
+        <img className="w-full md:w-auto md:h-96" src={movie.image} />
+        <div className="flex flex-col p-5 gap-5">
+          <h2 className="w-full">{movie.title}</h2>
+          <h3 className="w-full text-center">{movie.description}</h3>
+        </div>
+      </div>
       <button
         className="bg-lime-800 p-2 rounded-md hover:bg-lime-700"
         onClick={() => navigate("/")}
